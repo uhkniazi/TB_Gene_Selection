@@ -10,6 +10,8 @@ download(url, 'CCrossValidation.R')
 
 # load the required packages
 source('CCrossValidation.R')
+# delete the file after source
+unlink('CCrossValidation.R')
 
 # utility function to load object
 f_LoadObject = function(r.obj.file)
