@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Tb gene selection by uhkniazi</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Tb gene selection</h1>
+        <h2>Script for variable selection using the combined data sets of host blood microarray data for predicting TB and OD groups.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/uhkniazi/TB_Gene_Selection/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/uhkniazi/TB_Gene_Selection/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/uhkniazi/TB_Gene_Selection" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="tb_gene_selection" class="anchor" href="#tb_gene_selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>TB_Gene_Selection</h1>
+
+<p>Script for variable selection using the combined data sets of host blood microarray data for predicting TB and OD groups.</p>
+
+<h1>
+<a id="generating-test-data" class="anchor" href="#generating-test-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generating test data</h1>
+
+<p>The data sets from various studies were combined using COMBAT as explained in the main paper. The factors are relevelled
+so that ATB is 1 and OD is 0. PCA on the samples is performed and some outliers are removed. Infinite and NA values are removed. Genes are further selected, based on if they are differentially expressed between the 2 conditions on a t.test and a wilcoxon test with BH FDR of .1% is used as a cutoff for significantly different genes between ATB and OD. Using this smaller set of genes we set aside 30% of data randomly as test set. Random Forest is classifier is run on the training set to select top 100 genes based on the variable importance (NOTE: this can take several hours to a day to finish, depending on computational resources). This set of 100 variables and the expression values in each sample are provided with the test script.</p>
+
+<h1>
+<a id="running-the-script" class="anchor" href="#running-the-script" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running the script</h1>
+
+<h2>
+<a id="test-data" class="anchor" href="#test-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test Data</h2>
+
+<p>lData.publish.rds, provided with the repository and is downloaded when the script is run.</p>
+
+<h2>
+<a id="variable-selection-library" class="anchor" href="#variable-selection-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Variable selection library</h2>
+
+<p>CCrossValidation.R is downloaded when the script is run from the repository <a href="https://github.com/uhkniazi/CCrossValidation">https://github.com/uhkniazi/CCrossValidation</a><br>
+This is an S4 class R object and details of this class and its functions are provided at the main repository page. </p>
+
+<h2>
+<a id="steps-for-selection" class="anchor" href="#steps-for-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Steps for selection</h2>
+
+<p>1- Nested random forest to select top 30 variables.<br>
+2- Nested exhaustive subset selection to select combinations of variables that produce a good fit.<br>
+3- Nested 10 fold cross validation using LDA where the model is fit on the training set and prediction is performed on the test set for the 2 to n variable models.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
